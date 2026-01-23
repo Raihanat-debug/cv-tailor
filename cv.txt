@@ -1,0 +1,9 @@
+[skill:sales]
+Sold products
+
+[skill:teamwork]
+Worked with a team
+
+[skill:Python]
+- Data analysis using Pandas and NumPy.
+- Automation scripts. 

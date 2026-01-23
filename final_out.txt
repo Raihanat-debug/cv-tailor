@@ -1,0 +1,8 @@
+[skill:sales]
+Sold products
+
+
+[skill:teamwork]
+Worked with a team
+
+
