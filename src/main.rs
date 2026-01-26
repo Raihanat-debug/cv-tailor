@@ -1,107 +1,75 @@
-use anyhow::{Context, Result};
-use std::collections::HashMap;
 use std::env;
 use std::fs;
+use std::process;
 
-fn main() -> Result<()> {
+fn main() {
     let args: Vec<String> = env::args().collect();
-
-    if args.len() != 3 {
-        eprintln!("Usage: cv-t <cv-file> <profile-file>");
-        // Return Ok(()) to exit gracefully, or an error if you prefer strict failure.
-        // For CLI tools, printing usage and exiting non-zero is common, but let's be clean.
-        std::process::exit(1);
-    }
-
-    let cv_path = &args[1];
-    let profile_path = &args[2];
-
-    let cv_content = fs::read_to_string(cv_path)
-        .with_context(|| format!("Failed to read CV file: {}", cv_path))?;
     
-    let profile_content = fs::read_to_string(profile_path)
-        .with_context(|| format!("Failed to read profile file: {}", profile_path))?;
-
-    let sections = parse_cv(&cv_content);
-    let profile = parse_profile(&profile_content);
-
-    let output = build_output(&sections, &profile);
-    print!("{}", output);
-
-    Ok(())
-}
-
-fn parse_cv(input: &str) -> HashMap<String, Vec<String>> {
-    let mut sections: HashMap<String, Vec<String>> = HashMap::new();
-    let mut current_skill: Option<String> = None;
-
-    for line in input.lines() {
-        if let Some(skill) = parse_skill_tag(line) {
-            current_skill = Some(skill.clone());
-            sections.entry(skill).or_insert_with(Vec::new);
-        } else if let Some(skill) = &current_skill {
-            // Only add lines if we are currently inside a skill section
-            sections.get_mut(skill).expect("Skill key must exist").push(line.to_string());
+    let mut cv_path = String::new();
+    let mut profile_path = String::new();
+    let mut out_path = String::new();
+    
+    let mut i = 1;
+    while i < args.len() {
+        match args[i].as_str() {
+            "--cv" => {
+                i += 1;
+                if i < args.len() {
+                    cv_path = args[i].clone();
+                }
+            }
+            "--profile" => {
+                i += 1;
+                if i < args.len() {
+                    profile_path = args[i].clone();
+                }
+            }
+            "--out" => {
+                i += 1;
+                if i < args.len() {
+                    out_path = args[i].clone();
+                }
+            }
+            _ => {}
         }
+        i += 1;
+    }
+    
+    if cv_path.is_empty() || profile_path.is_empty() || out_path.is_empty() {
+        eprintln!("Usage: cv-t --cv <cv_file> --profile <profile_file> --out <output_file>");
+        process::exit(1);
     }
 
-    sections
+    let cv_content = read_file(&cv_path);
+    let profile_content = read_file(&profile_path);
+
+    let tailored = tailor_cv(&cv_content, &profile_content);
+
+    fs::write(&out_path, tailored).unwrap_or_else(|_| {
+        eprintln!("Failed to write output file");
+        process::exit(1);
+    });
 }
 
-fn parse_skill_tag(line: &str) -> Option<String> {
-    let line = line.trim();
-    if line.starts_with("[skill:") && line.ends_with(']') {
-        // Safer slicing: skip "[skill:" (7 chars) and truncate last char "]"
-        if line.len() > 8 {
-             let skill = &line[7..line.len() - 1];
-             return Some(skill.to_string());
-        }
-    }
-    None
+fn read_file(path: &str) -> String {
+    fs::read_to_string(path).unwrap_or_else(|_| {
+        eprintln!("Failed to read file: {}", path);
+        process::exit(1);
+    })
 }
 
-fn parse_profile(input: &str) -> Vec<String> {
-    input
-        .lines()
-        .map(|l| l.trim())
-        .filter(|l| !l.is_empty())
-        .map(String::from)
-        .collect()
-}
-
-fn build_output(
-    sections: &HashMap<String, Vec<String>>,
-    profile: &[String],
-) -> String {
+fn tailor_cv(cv: &str, profile: &str) -> String {
+    let priorities: Vec<&str> = profile.lines().collect();
     let mut output = String::new();
 
-    for skill in profile {
-        if let Some(lines) = sections.get(skill) {
-            // Add the header tag back to preserve structure if needed, 
-            // or just the content? The user said "Outputs a job-oriented CV version without modifying the original data"
-            // The original had [skill:Name]. Let's keep it to maintain structure.
-            output.push_str(&format!("[skill:{}]\n", skill));
-            for line in lines {
-                output.push_str(line);
-                output.push('\n');
+    for p in priorities {
+        for block in cv.split("\n\n") {
+            if block.to_lowercase().contains(&p.to_lowercase()) {
+                output.push_str(block);
+                output.push_str("\n\n");
             }
-            // Add a newline separators between sections for readability
-            output.push('\n'); 
         }
     }
 
     output
-}
-
-#[cfg(test)]
-mod tests {
-    use super::*;
-
-    #[test]
-    fn test_parse_skill_tag() {
-        assert_eq!(parse_skill_tag("[skill:Rust]"), Some("Rust".to_string()));
-        assert_eq!(parse_skill_tag(" [skill:Python] "), Some("Python".to_string()));
-        assert_eq!(parse_skill_tag("NoTag"), None);
-        assert_eq!(parse_skill_tag("[skill:]"), None); // Empty skill name
-    }
 }
