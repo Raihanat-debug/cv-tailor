@@ -1,4 +1,4 @@
-# CV Tailor CLI Tool
+#  CV Tailor CLI Tool
 
 ## Motivation
 
@@ -33,9 +33,9 @@ The process of tailoring a CV is repetitive and can be automated by identifying 
 
 ## Why Rust?
 
-**Why I Chose Rust**:
+**Why is Rust good for this**:
 
-I chose Rust for this project because of its **performance** and **memory safety** features, which make it an ideal choice for building fast and efficient command-line tools. Rust’s rich ecosystem, along with its powerful string manipulation and file I/O capabilities, make it perfect for tasks like **text parsing** and **file handling**.
+Rust is good for this project because of its **performance** and **memory safety** features, which make it an ideal choice for building fast and efficient command-line tools. Rust’s rich ecosystem, along with its powerful string manipulation and file I/O capabilities, make it perfect for tasks like **text parsing** and **file handling**.
 
 ---
 
@@ -62,20 +62,24 @@ The CV Tailor tool can be used by:
 - **Resume Building Services**: Automating the process of generating tailored CVs for users, ensuring that the most relevant skills are highlighted.
 
 ---
+## Problem Statement
+A tool that automatically tailors a CV based on a given job profile by filtering and reordering relevant skills and experience.
 
-## Running the Tool
+### Features
+- **Input**: A CV file and a job profile file.
+- **Output**: A tailored CV that highlights relevant skills for the job.
+
+## How to Run
 
 ### Prerequisites
-
-- **Rust**: Install Rust from [rust-lang.org](https://www.rust-lang.org/).
-- **Cargo**: Comes with Rust, used for building and running the tool.
+- Rust (install via [rust-lang.org](https://www.rust-lang.org/))
+- Cargo (comes with Rust)
 
 ### Setup
-
-1. Clone the repository:
+1. Clone this repository:
    ```bash
-   git clone https://github.com/yourusername/cv-tailor.git
-   cd cv-tailor
+   git clone <your-repo-url>
+   cd <repo-name>
    ```
 
 2. Run the tool:
@@ -90,3 +94,27 @@ The CV Tailor tool can be used by:
    cd CV-T
    cargo run -- --cv cv.txt --profile profile.txt --out tailored.txt
    ```
+
+---
+
+## Binary Releases & Cross-Compilation
+
+This project uses **GitHub Actions** to automatically build and release binaries for multiple platforms whenever a new version tag (e.g., `v1.0.0`) is pushed.
+
+### Supported Platforms
+- **Windows** (`x86_64-pc-windows-msvc`)
+- **Linux** (`x86_64-unknown-linux-musl`)
+- **Linux ARM64** (`aarch64-unknown-linux-musl`)
+
+### How to Download
+1. Go to the [Releases](https://github.com/Raihanat-debug/cv-tailor/releases) page.
+2. Download the compressed binary for your operating system.
+3. Extract and run the executable from your terminal.
+
+### Creating a New Release
+To trigger a new build and release:
+```bash
+git tag v1.0.1
+git push origin v1.0.1
+```
+The workflow will automatically compile the code for all supported platforms and upload the artifacts to the release page.
