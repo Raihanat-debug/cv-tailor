@@ -10,13 +10,13 @@ body {
   font-family: Arial, sans-serif;
   line-height: 1.6;
   padding: 20px;
-  background-color: #f4f4f4;
-  color: #333;
+  background-color: #222; /* Dark background for the body */
+  color: #fff; /* White text for better contrast */
 }
 
 /* Header */
 header {
-  background: #333;
+  background: #333; /* Dark background for the header */
   color: white;
   text-align: center;
   padding: 20px 0;
@@ -33,7 +33,7 @@ header p {
 /* Features Section */
 #features {
   padding: 20px 0;
-  background: #f1f1f1;
+  background: #444; /* Darker background for features section */
 }
 
 #features ul {
@@ -48,7 +48,7 @@ header p {
 /* How It Works Section */
 #how-it-works {
   padding: 20px 0;
-  background: #fff;
+  background: #555; /* Darker background for the How it Works section */
 }
 
 #how-it-works ol {
@@ -59,26 +59,30 @@ header p {
   margin: 10px 0;
 }
 
-/* Call to Action */
+/* Call to Action Section */
 #cta {
   text-align: center;
   padding: 20px 0;
-  background: #333;
+  background: #333; /* Dark background for Call to Action section */
   color: white;
 }
 
 #cta a {
-  color: #ffbf00;
+  color: #ffbf00; /* Yellow color for the link */
   text-decoration: none;
   font-size: 1.2em;
   margin-top: 20px;
   display: inline-block;
 }
 
+#cta a:hover {
+  color: #ff8000; /* Change color on hover */
+}
+
 /* Footer */
 footer {
   text-align: center;
   padding: 10px 0;
-  background: #333;
+  background: #333; /* Dark background for the footer */
   color: white;
 }
