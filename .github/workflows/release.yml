@@ -10,51 +10,65 @@ permissions:
   contents: write
 
 jobs:
-  build:
-    name: Build ${{ matrix.target }}
-    runs-on: ubuntu-latest
+  release:
+    name: Release - ${{ matrix.platform.release_for }}
     strategy:
       matrix:
-        include:
-          - target: x86_64-unknown-linux-musl
+        platform:
+          - release_for: Linux-x86_64
             os: ubuntu-latest
-            use_cross: true
-          - target: aarch64-unknown-linux-musl
-            os: ubuntu-latest
-            use_cross: true
-          - target: x86_64-pc-windows-msvc
-            os: windows-latest
-            use_cross: false
+            target: x86_64-unknown-linux-musl
+            bin: cv-t
+            name: cv-tailor-linux-x86_64.tar.gz
+            command: build
 
+          - release_for: Linux-aarch64
+            os: ubuntu-latest
+            target: aarch64-unknown-linux-musl
+            bin: cv-t
+            name: cv-tailor-linux-aarch64.tar.gz
+            command: build
+
+          - release_for: Windows-x86_64
+            os: windows-latest
+            target: x86_64-pc-windows-msvc
+            bin: cv-t.exe
+            name: cv-tailor-windows-x86_64.zip
+            command: build
+
+    runs-on: ${{ matrix.platform.os }}
     steps:
       - uses: actions/checkout@v4
-
-      - name: Install Rust
-        uses: dtolnay/rust-toolchain@stable
-        with:
-          targets: ${{ matrix.target }}
-
-      - name: Build
-        uses: actions-rs/cargo@v1
-        with:
-          use-cross: ${{ matrix.use_cross }}
-          command: build
-          args: --release --target ${{ matrix.target }}
-
-      - name: Archive Binary
-        if: runner.os != 'Windows'
-        run: |
-          cd target/${{ matrix.target }}/release
-          tar -czf ../../../cv-tailor-${{ matrix.target }}.tar.gz cv-t
       
-      - name: Archive Binary (Windows)
-        if: runner.os == 'Windows'
-        run: |
-          cd target/${{ matrix.target }}/release
-          Compress-Archive -Path cv-t.exe -DestinationPath ../../../cv-tailor-${{ matrix.target }}.zip
+      - name: Build binary
+        uses: rust-build/rust-build.action@v1.4.5
+        with:
+          RUSTTARGET: ${{ matrix.platform.target }}
+          ARCHIVE_NAME: ${{ matrix.platform.name }}
+          SRC_DIR: .
+          UPLOAD_MODE: none
 
-      - name: Upload Artifacts
+      - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: cv-tailor-${{ matrix.target }}
-          path: cv-tailor-${{ matrix.target }}.*
+          name: ${{ matrix.platform.name }}
+          path: ${{ matrix.platform.name }}
+  
+  publish:
+    name: Publish Release
+    needs: release
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          path: artifacts
+
+      - name: Display structure of downloaded files
+        run: ls -R artifacts
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: artifacts/**/*
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
