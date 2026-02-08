@@ -1,0 +1,91 @@
+:root {
+    --bg-color: #0f172a;
+    --text-color: #e2e8f0;
+    --accent-color: #38bdf8;
+    --secondary-bg: #1e293b;
+    --font-main: 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    font-family: var(--font-main);
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+header {
+    background-color: var(--secondary-bg);
+    padding: 4rem 2rem;
+    text-align: center;
+    border-bottom: 1px solid #334155;
+}
+
+header h1 {
+    font-size: 3rem;
+    margin: 0;
+    background: linear-gradient(to right, #38bdf8, #818cf8);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+header p {
+    font-size: 1.25rem;
+    color: #94a3b8;
+    margin-top: 1rem;
+}
+
+main {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2rem;
+    flex: 1;
+}
+
+section {
+    background-color: var(--secondary-bg);
+    padding: 2rem;
+    border-radius: 12px;
+    margin-bottom: 2rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+    color: var(--accent-color);
+    border-bottom: 2px solid #334155;
+    padding-bottom: 0.5rem;
+    margin-top: 0;
+}
+
+pre {
+    background-color: #0f172a;
+    padding: 1.5rem;
+    border-radius: 8px;
+    overflow-x: auto;
+    color: #a5b4fc;
+    font-family: 'Fira Code', monospace;
+    border: 1px solid #334155;
+}
+
+a {
+    color: var(--accent-color);
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+a:hover {
+    color: #818cf8;
+    text-decoration: underline;
+}
+
+footer {
+    text-align: center;
+    padding: 2rem;
+    background-color: var(--secondary-bg);
+    border-top: 1px solid #334155;
+    color: #64748b;
+}

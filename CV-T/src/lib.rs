@@ -19,6 +19,15 @@ pub fn tailor_cv(cv: &str, profile: &str) -> String {
     output
 }
 
+/// Parses the CV content into a HashMap of skills and their associated blocks.
+///
+/// # Arguments
+///
+/// * `input` - A string slice that holds the CV content.
+///
+/// # Returns
+///
+/// * `HashMap<String, Vec<String>>` - A map where keys are skill names (lowercase) and values are lists of text blocks.
 fn parse_cv(input: &str) -> HashMap<String, Vec<String>> {
     let mut map = HashMap::new();
     let mut current_skill: Option<String> = None;
