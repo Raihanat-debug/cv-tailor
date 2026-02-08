@@ -1,88 +1,101 @@
 /* General Reset */
 * {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
 /* Body */
 body {
-  font-family: Arial, sans-serif;
-  line-height: 1.6;
-  padding: 20px;
-  background-color: #222; /* Dark background for the body */
-  color: #fff; /* White text for better contrast */
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    padding: 20px;
+    background-color: #222;
+    /* Dark background for the body */
+    color: #fff;
+    /* White text for better contrast */
 }
 
 /* Header */
 header {
-  background: #333; /* Dark background for the header */
-  color: white;
-  text-align: center;
-  padding: 20px 0;
+    background: #333;
+    /* Dark background for the header */
+    color: white;
+    text-align: center;
+    padding: 20px 0;
 }
 
 header h1 {
-  font-size: 2.5em;
+    font-size: 3rem;
+    margin: 0;
+    background: linear-gradient(to right, #38bdf8, #818cf8);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
 header p {
-  font-size: 1.2em;
+    font-size: 1.2em;
 }
 
 /* Features Section */
 #features {
-  padding: 20px 0;
-  background: #444; /* Darker background for features section */
+    padding: 20px 0;
+    background: #444;
+    /* Darker background for features section */
 }
 
 #features ul {
-  list-style-type: none;
+    list-style-type: none;
 }
 
 #features li {
-  font-size: 1.2em;
-  margin: 10px 0;
+    font-size: 1.2em;
+    margin: 10px 0;
 }
 
 /* How It Works Section */
 #how-it-works {
-  padding: 20px 0;
-  background: #555; /* Darker background for the How it Works section */
+    padding: 20px 0;
+    background: #555;
+    /* Darker background for the How it Works section */
 }
 
 #how-it-works ol {
-  font-size: 1.2em;
+    font-size: 1.2em;
 }
 
 #how-it-works li {
-  margin: 10px 0;
+    margin: 10px 0;
 }
 
 /* Call to Action Section */
 #cta {
-  text-align: center;
-  padding: 20px 0;
-  background: #333; /* Dark background for Call to Action section */
-  color: white;
+    text-align: center;
+    padding: 20px 0;
+    background: #333;
+    /* Dark background for Call to Action section */
+    color: white;
 }
 
 #cta a {
-  color: #ffbf00; /* Yellow color for the link */
-  text-decoration: none;
-  font-size: 1.2em;
-  margin-top: 20px;
-  display: inline-block;
+    color: #ffbf00;
+    /* Yellow color for the link */
+    text-decoration: none;
+    font-size: 1.2em;
+    margin-top: 20px;
+    display: inline-block;
 }
 
 #cta a:hover {
-  color: #ff8000; /* Change color on hover */
+    color: #ff8000;
+    /* Change color on hover */
 }
 
 /* Footer */
 footer {
-  text-align: center;
-  padding: 10px 0;
-  background: #333; /* Dark background for the footer */
-  color: white;
+    text-align: center;
+    padding: 10px 0;
+    background: #333;
+    /* Dark background for the footer */
+    color: white;
 }

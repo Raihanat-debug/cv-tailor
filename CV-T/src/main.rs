@@ -20,6 +20,9 @@ struct Args {
     out: String,
 }
 
+/// Main entry point for the CV Tailor tool.
+///
+/// Parsing command line arguments and orchestrates the CV tailoring process.
 fn main() {
     let args = Args::parse();
 
