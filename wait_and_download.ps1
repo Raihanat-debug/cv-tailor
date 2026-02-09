@@ -1,6 +1,6 @@
 $urls = @(
-    "https://github.com/Raihanat-debug/cv-tailor/releases/download/v1.0.6/cv-tailor-x86_64-unknown-linux-musl.tar.gz",
-    "https://github.com/Raihanat-debug/cv-tailor/releases/download/v1.0.6/cv-tailor-aarch64-unknown-linux-musl.tar.gz"
+    "https://github.com/Raihanat-debug/cv-tailor/releases/download/v1.0.7/cv-tailor-x86_64-unknown-linux-musl.tar.gz",
+    "https://github.com/Raihanat-debug/cv-tailor/releases/download/v1.0.7/cv-tailor-aarch64-unknown-linux-musl.tar.gz"
 )
 
 $destinations = @(
@@ -8,7 +8,7 @@ $destinations = @(
     "target/cv-tailor-aarch64-unknown-linux-musl.tar.gz"
 )
 
-Write-Host "Waiting for GitHub Release v1.0.6 artifacts to be ready... (This may take a few minutes)"
+Write-Host "Waiting for GitHub Release v1.0.7 artifacts to be ready... (This may take a few minutes)"
 
 for ($i = 0; $i -lt $urls.Count; $i++) {
     $url = $urls[$i]

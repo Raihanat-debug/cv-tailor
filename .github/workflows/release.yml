@@ -37,7 +37,9 @@ jobs:
 
       - name: Install Cross
         if: matrix.use_cross
-        run: cargo install cross
+        uses: taiki-e/install-action@v2
+        with:
+          tool: cross
 
       - name: Build
         run: |
